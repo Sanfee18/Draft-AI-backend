@@ -10,7 +10,6 @@ def download_model(model_name, local_model_path):
     snapshot_download(
         repo_id=model_name,
         local_dir_use_symlinks=False,
-        revision="fp16",
         cache_dir=local_cache_path,
         local_dir=local_model_path,
         ignore_patterns=["*.ckpt", "*.safetensors"],

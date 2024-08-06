@@ -35,17 +35,14 @@ class TritonPythonModel:
         self.model_dir = args["model_repository"]
         self.model_ver = args["model_version"]
 
-        self.controlnet_dir = args["controlnet_repository"]
-        self.controlnet_ver = args["controlnet_version"]
-
-        self.controlnet = ControlNetModel.from_pretrained(
-            f"{self.controlnet_dir}/{self.controlnet_ver}/checkpoint",
+        controlnet = ControlNetModel.from_pretrained(
+            "xinsir/controlnet-scribble-sdxl-1.0",
             torch_dtype=torch.float16,
         )
 
         self.pipe = StableDiffusionXLControlNetPipeline.from_pretrained(
             f"{self.model_dir}/{self.model_ver}/checkpoint",
-            controlnet=self.controlnet,
+            controlnet=controlnet,
             torch_dtype=torch.float16,
         )
         self.pipe.scheduler = DPMSolverSinglestepScheduler.from_config(
